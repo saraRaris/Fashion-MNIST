@@ -73,33 +73,27 @@ def make_plots(history, history2 = None):
         y1 = history.history['acc']
         plt.plot(x1,y1, c = 'lightblue', label = 'train lr= 0.01')
         y2 = history.history['val_acc']
-        x2 = np.linspace(0,9,10)
-        plt.plot(x2,y2, c = 'orange',  label = 'test lr= 0.01')
-        x3 = np.linspace(9,30,30)
+        plt.plot(x1,y2, c = 'orange',  label = 'test lr= 0.01')
+        x3 = np.linspace(10,39,30)
         y3 = history2.history['acc']
         plt.plot(x3,y3, c = 'green', label = 'train lr= 0.001')
         y4 = history2.history['val_acc']
-        x4 = np.linspace(9,30,30)
-        plt.plot(x4,y4, c = 'purple', label = 'test lr= 0.001')
+        plt.plot(x3,y4, c = 'purple', label = 'test lr= 0.001')
 
         plt.title('model accuracy')
         plt.ylabel('accuracy')
         plt.xlabel('epoch')
-        plt.xlim((0,30))
+        plt.xlim((0,40))
         plt.show()
 
-        x1 = np.linspace(0,9,10)
         y1 = history.history['loss']
         plt.plot(x1,y1, c = 'lightblue', label = 'train lr= 0.01')
         y2 = history.history['val_loss']
-        x2 = np.linspace(0,9,10)
-        plt.plot(x2,y2, c = 'orange',  label = 'test lr= 0.01')
-        x3 = np.linspace(9,30,30)
+        plt.plot(x1,y2, c = 'orange',  label = 'test lr= 0.01')
         y3 = history2.history['loss']
         plt.plot(x3,y3, c = 'green', label = 'train lr= 0.001')
         y4 = history2.history['val_loss']
-        x4 = np.linspace(9,30,30)
-        plt.plot(x4,y4, c = 'purple', label = 'test lr= 0.001')
+        plt.plot(x3,y4, c = 'purple', label = 'test lr= 0.001')
 
         plt.title('model loss')
         plt.ylabel('loss')
@@ -151,7 +145,7 @@ def main():
         
         #Update learning rate
         model.optimizer =Adam(lr = 0.001)
-        history2 = model.fit(x_train, y_train, validation_data= (x_test, y_test), epochs=20, batch_size=1024, shuffle = True)
+        history2 = model.fit(x_train, y_train, validation_data= (x_test, y_test), epochs=30, batch_size=1024, shuffle = True)
 
     else:
         

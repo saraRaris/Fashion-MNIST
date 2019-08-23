@@ -184,13 +184,22 @@ The final architecture is the following:
 	    x2_dp = Dropout(0.3) (x2_conv)
 	    x2_add = add([x2_batch, x2_dp])
 	    x2_pool = MaxPooling2D(pool_size=(2, 2), padding = 'same')(x2_add)
+	    
+	    
+	    ## third layer
+	
+	    x3_batch = BatchNormalization()(x2_pool)
+	    x3_conv = Conv2D(64, (3, 3), activation='relu', bias_initializer='RandomNormal', kernel_initializer='random_uniform', padding = 'same')(x3_batch)
+	    x3_dp = Dropout(0.3) (x3_conv)
+	    x3_add = add([x3_batch, x3_dp])
+	    x3_pool = MaxPooling2D(pool_size=(2, 2), padding = 'same')(x3_add)
 	
 	
 	    ## ouput layer
 	
-	    x3_batch = BatchNormalization()(x2_pool)
+	    x4_batch = BatchNormalization()(x3_pool)
 	
-	    x = Flatten()(x3_batch)
+	    x = Flatten()(x4_batch)
 	    x = Dense(128, activation='relu')(x)
 	    x = Dropout(0.7)(x)
 	    preds = Dense(num_classes, activation='softmax')(x)
@@ -323,7 +332,7 @@ Below, plots for both All-CNN and reduced All-CNN can be seen (first pair and se
 
 ### Model 5: 3 Conv + BatchNormalization + Dropout
 
-The last model implemented is the one with highest prediction rate. This model achieved a 93.24% accuracy. It was trained for 30 epochs that took 105 minutes. 
+The last model implemented is the one with highest prediction rate. This model achieved a 93.24% accuracy. It was trained for 40 epochs that took around 100 minutes. 
 
 A higher accuracy was achived by decreasing the learning rate from 0.01 to 0.001 after the first 10 epochs. In the images below the accuracy and the loss for both the training and test set can be observed. The accuracy of the training set increases very slowly after epoch 20. In the same way, the loss function 
 remains constant after that epoch.
@@ -344,7 +353,7 @@ CNN2 + BatchNorm + Skip + Dropout| 440,910 | 50.37 | 60.44 | 92.37% |
 CNN3 + BatchNorm + Skip + Dropout  | 207,758  | 57.28  |  68.74  | 92.75% |
 All-CNN | 1,248,202  | 374.76 |  562.14   | 92.36% |
 reduced All-CNN |   139,634  | 62.78  |  94.17   | 92.54%|
-3 layer CNN  | 192,218  |  69.73  | 139.46 |  **93.24%** |
+3 layer CNN  | 192,218  | 100.63  | 150.95 |  **93.24%** |
 
 ## Classifying objects in video
 This section is dedicated to the demo program implemented. The program detects objects in video files and classifies them using the model that achieved the highest prediction rate on the Fashion-MNIST dataset, Model 5.
@@ -369,7 +378,7 @@ The most efficient model took around 28s per epoch to be trained. However, the p
 
 It has also been observed, that a network can become more efficient by reducing the number of filters. This is observed by comparing the results of All-CNN to the proposed model, reduced All-CNN. The results in the performance analysis section show that the reduced network achieves similar performance to the original one. At the same time, the computational time is reduced by over 80%.
 
-After investigating how these architectures perform, the model that achieved the highest performance was built. The prediction rate for Model 5 is 93.24% and computational time is a bit bigger.
+After investigating how these architectures perform, the model that achieved the highest performance was built. The prediction rate for Model 5 is 93.24%. However, the computational time is significantly bigger than for the other models.
 
 Data augmentation was tested but not included as it did not seem to improve the immediate performance of the models. For making a difference, the models should probably have been trained for more epochs when including data augmentation. As the computational time was a constraint this option was dismissed. 
 
