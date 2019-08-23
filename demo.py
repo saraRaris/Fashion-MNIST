@@ -27,6 +27,7 @@ def init_dict():
 
 
 def load_model():
+    
     #Load model
     yaml_file = open('model.yaml', 'r')
     loaded_model_yaml = yaml_file.read()
@@ -42,11 +43,17 @@ def resize_im(cropped_im):
     resized = cv2.resize(cropped_im, (28, 28))
     return resized
 
+
 def inference(image, labels_dict):
+    
+    #Set correct dimensions for the image
     x = np.expand_dims(image, axis=0)
     x = np.expand_dims(x, axis=-1)
+    
+    #Give inference
     output = (model.predict(x).tolist())[0]
     
+    #Return label if prediction > thr
     if max(output) > 0.90:
         return labels_dict[output.index(max(output))]
     else:
@@ -94,6 +101,7 @@ def selective_search(frame, gray, model):
         candidates.append(r['rect'])
 
     if candidates:
+        #Merges candidates that are very close together
         candidates = merge_candidates(candidates)
     
     return candidates
@@ -161,10 +169,11 @@ if __name__ == '__main__':
             #Perform selective search
             candidates = selective_search(frame, gray, model)
 
-            #initialize detection list
+            #Initialize detection list
             detections = []
             labels = []
-            #crop image
+            
+            #Crop image
             for x, y, w, h in candidates:
                 cropped_image = gray[y:y+h , x:x+w]
                 image = resize_im(cropped_image)
@@ -175,7 +184,7 @@ if __name__ == '__main__':
                     labels.append(label)
                     detections.append([x, y, w, h])
         
-            # draw rectangles on the original image
+            #Draw rectangles on the original frame
             for i in range(0, len(detections)):
                 x, y, w, h = detections[i]
                 outlined_image = cv2.rectangle(frame, (x, y), (x + w, y + h), (0,255,0), 5)
@@ -184,11 +193,13 @@ if __name__ == '__main__':
             cv2.imshow('image',frame)
             cv2.waitKey(1)
             
+            #Saves processed frame in video
             processed.write(frame)
 
             #Exit
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
+            
         else:
             processed.release()
             cap.release()

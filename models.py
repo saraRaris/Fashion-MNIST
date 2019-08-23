@@ -8,7 +8,6 @@ def CNN2(num_classes):
     input_image = Input(shape=(28, 28, 1))
     
     ## first layer
-    
     x1_batch = BatchNormalization()(input_image)
     x1_conv = Conv2D(32, (3, 3), activation='relu', bias_initializer='RandomNormal', kernel_initializer='random_uniform', padding = 'same')(x1_batch)
     x1_add = add([x1_batch, x1_conv])
@@ -16,15 +15,13 @@ def CNN2(num_classes):
                          
                          
     ## second layer
-                         
     x2_batch = BatchNormalization()(x1_pool)
     x2_conv = Conv2D(32, (3, 3), activation='relu', bias_initializer='RandomNormal', kernel_initializer='random_uniform',padding = 'same')(x2_batch)
     x2_add = add([x2_batch, x2_conv])
     x2_pool = MaxPooling2D(pool_size=(2, 2), padding = 'same')(x2_add)
     
-     
+
      ## ouput layer
-     
     x3_batch = BatchNormalization()(x2_pool)
      
     x = Flatten()(x3_batch)
@@ -44,7 +41,6 @@ def CNN2_dropout(num_classes):
     input_image = Input(shape=(28, 28, 1))
     
     ## first layer
-    
     x1_batch = BatchNormalization()(input_image)
     x1_conv = Conv2D(64, (3, 3), activation='relu', bias_initializer='RandomNormal', kernel_initializer='random_uniform',padding = 'same')(x1_batch)
     x1_add = add([x1_batch, x1_conv])
@@ -52,25 +48,15 @@ def CNN2_dropout(num_classes):
      
      
     ## second layer
-     
     x2_batch = BatchNormalization()(x1_pool)
     x2_conv = Conv2D(64, (3, 3), activation='relu', bias_initializer='RandomNormal', kernel_initializer='random_uniform', padding = 'same')(x2_batch)
     x2_dp = Dropout(0.3) (x2_conv)
     x2_add = add([x2_batch, x2_dp])
     x2_pool = MaxPooling2D(pool_size=(2, 2), padding = 'same')(x2_add)
      
-    ## third layer
-     
-    x3_batch = BatchNormalization()(x2_pool)
-    x3_conv = Conv2D(64, (3, 3), activation='relu', bias_initializer='RandomNormal', kernel_initializer='random_uniform',padding = 'same')(x3_batch)
-    x3_dp = Dropout(0.3) (x3_conv)
-    x3_add = add([x3_batch, x3_dp])
-    x3_pool = MaxPooling2D(pool_size=(2, 2), padding = 'same')(x3_add)
-     
      
     ## ouput layer
-     
-    x4_batch = BatchNormalization()(x3_pool)
+    x3_batch = BatchNormalization()(x2_pool)
      
     x = Flatten()(x4_batch)
     x = Dense(128, activation='relu')(x)
@@ -84,11 +70,11 @@ def CNN2_dropout(num_classes):
     return model
 
 
+
 def CNN3_dropout(num_classes):
     input_image = Input(shape=(28, 28, 1))
     
     ## first layer
-    
     x1_batch = BatchNormalization()(input_image)
     x1_conv = Conv2D(64, (3, 3), activation='relu', bias_initializer='RandomNormal', kernel_initializer='random_uniform',padding = 'same')(x1_batch)
     x1_add = add([x1_batch, x1_conv])
@@ -96,7 +82,6 @@ def CNN3_dropout(num_classes):
      
      
     ## second layer
-     
     x2_batch = BatchNormalization()(x1_pool)
     x2_conv = Conv2D(64, (3, 3), activation='relu', bias_initializer='RandomNormal', kernel_initializer='random_uniform',padding = 'same')(x2_batch)
     x2_dp = Dropout(0.3) (x2_conv)
@@ -105,7 +90,6 @@ def CNN3_dropout(num_classes):
      
      
     ## ouput layer
-     
     x3_batch = BatchNormalization()(x2_pool)
      
     x = Flatten()(x3_batch)
@@ -146,6 +130,7 @@ def reduced_all_cnn(num_classes):
     #model.summary()
     
     return model
+
 
 
 def model5(num_classes):

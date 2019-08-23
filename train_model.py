@@ -1,5 +1,4 @@
 import keras
-import tensorflow as tf
 import mnist_reader
 import time, argparse, pdb
 import matplotlib.pyplot as plt
@@ -10,18 +9,23 @@ from models import CNN2, CNN2_dropout, CNN3_dropout, reduced_all_cnn, model5
 
 
 def data_preparation():
+    
     #Reading the data
     x_train, y_train = mnist_reader.load_mnist('data/', kind='train')
     x_test, y_test = mnist_reader.load_mnist('data/', kind='t10k')
+    
     #Recover dimensions
     x_train = x_train.reshape((x_train.shape[0], 28, 28, 1))
     x_test = x_test.reshape((x_test.shape[0], 28, 28, 1))
+    
     #Convert to float
     x_train = x_train.astype('float32')
     x_test = x_test.astype('float32')
+    
     #Normalize inputs from [0, 255] to [0, 1]
     x_train = x_train / 255
     x_test = x_test / 255
+    
     #Convert class vectors to binary class matrices ("one hot encoding")
     y_train = keras.utils.to_categorical(y_train)
     y_test = keras.utils.to_categorical(y_test)
@@ -137,16 +141,20 @@ def main():
     
     #Build model and get params
     model, num_epochs, batch = output_model(args, num_classes)
-    pdb.set_trace()
+
     #Train the model
     if args.model == 'model5':
+        
         #Set initial learning rate
         model.optimizer.lr=0.01
         history = model.fit(x_train,y_train, validation_data= (x_test, y_test), epochs=num_epochs, batch_size=batch, shuffle = True)
+        
         #Update learning rate
         model.optimizer =Adam(lr = 0.001)
-        history2 = model.fit(x_train, y_train, validation_data= (x_test, y_test), epochs=30, batch_size=1024, shuffle = True)
+        history2 = model.fit(x_train, y_train, validation_data= (x_test, y_test), epochs=20, batch_size=1024, shuffle = True)
+
     else:
+        
         #Fit the model compute the scores and print the model accuracy
         history = model.fit(x_train, y_train, validation_data= (x_test, y_test), epochs=num_epochs, batch_size=batch, shuffle = True)
     
