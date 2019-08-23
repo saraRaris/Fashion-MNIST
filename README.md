@@ -274,9 +274,9 @@ In [[4](https://arxiv.org/pdf/1901.09615.pdf)] the model implemented is studied 
 
 The model was trained for 35 epochs and the training time for this model was of 16.57 minutes. The plots for both the accuracy and the loss function can be seen below. As it can be observed, the accuracy on the test set does not improve much more after epoch 17th. Also, around that same epoch the loss function for the test set starts to increase. On the other hand, the accuracy and the loss function for the training set keep steadily increasing and decreasing respectively. This an indication the model can be overfitting.
 
-![MacDown Screenshot](/Users/sara/Documents/Challenges/Fashion-MNIST/acc_skio_conv_64.png)
+![MacDown Screenshot](images/acc_skio_conv_64.png)
 
-![MacDown Screenshot](/Users/sara/Documents/Challenges/Fashion-MNIST/loss_skip_con_64.png)
+![MacDown Screenshot](images/loss_skip_con_64.png)
 
 
 ### Model 2: CNN2 + Batch Normalization + Skip connections + Added Dropout 
