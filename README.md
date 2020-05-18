@@ -254,9 +254,9 @@ The last model proposed consists on 3 convolutional layers. Different combinatio
 The proposed architecture is the following:
 
 	def model5(num_classes):
-    	model = Sequential()
-    	model.add(Conv2D(32, kernel_size = (3,3), activation = 'relu', input_shape = (28,28, 1)))
-    	model.add(BatchNormalization(axis=1))
+    	    model = Sequential()
+    	    model.add(Conv2D(32, kernel_size = (3,3), activation = 'relu', input_shape = (28,28, 1)))
+    	    model.add(BatchNormalization(axis=1))
 
 	    model.add(Conv2D(64, kernel_size = (3,3), activation = 'relu'))
 	    model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -281,7 +281,7 @@ This model has been trained for 10 epochs with a learning rate of 0.01 and a bat
 
 In [[4](https://arxiv.org/pdf/1901.09615.pdf)] the model implemented is studied in Fashion-MINST dataset. In this study, the highest accuracy reported for the network is of 92.54%. However, after trying to repeat the results the prediction rate was of 92.02%. The difference with the accuracy reported is very small and can be due to the initialization of the weights at the beginning of the training. 
 
-The model was trained for 35 epochs and the training time for this model was of 16.57 minutes. The plots for both the accuracy and the loss function can be seen below. As it can be observed, the accuracy on the test set does not improve much more after epoch 17th. Also, around that same epoch the loss function for the test set starts to increase. On the other hand, the accuracy and the loss function for the training set keep steadily increasing and decreasing respectively. This an indication the model can be overfitting.
+The model was trained for 35 epochs and the training time for this model was of 16.57 minutes. The plots for both the accuracy and the loss function can be seen below. As it can be observed, the accuracy on the test set does not improve much more after epoch 17th. Also, around that same epoch the loss function for the test set starts to increase. On the other hand, the accuracy and the loss function for the training set and the test set keep steadily increasing and decreasing respectively. This an indication the model can be overfitting.
 
 ![MacDown Screenshot](images/acc_skio_conv_64.png)
 
@@ -290,7 +290,7 @@ The model was trained for 35 epochs and the training time for this model was of 
 
 ### Model 2: CNN2 + Batch Normalization + Skip connections + Added Dropout 
 
-As it has been previously seen, Model 1 results in overfitting after training for a few epochs. To alleviate this issue, this model is proposed. As described in the methodology section, Model 2 adds more dropout to the architecture. It also increases the number of filters from 32x32 to 64x64 in the convolutional layers.
+As it has been previously seen, Model 1 results is overfitting after training for a few epochs. To alleviate this issue, this model is proposed. As described in the methodology section, Model 2 adds more dropout to the architecture. It also increases the number of filters from 32x32 to 64x64 in the convolutional layers.
 
 This model was trained for 50 epochs achieving a final accuracy of 92.37% and a training time of 50.37 minutes. The plots for both the accuracy and the loss function can be seen below. As it can be observed, the accuracy of both the training and test set increases steadily. The loss function for the training set keeps decreasing but decreases very slowly in the test set after epoch 30.
 
